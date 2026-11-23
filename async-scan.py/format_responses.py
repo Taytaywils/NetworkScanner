@@ -2,12 +2,9 @@
 
 
 def format_responses(responses):
-    for response in responses:
-        if type(responses[response]) is not str:
-            print(response)
-            for t in responses[response]:
-                for port, flag in t:
-                    if flag == 'SA':
-                        print(f"\t{port}: Open")
-        else:
-            print(f"{response} {responses[response]}")
+    for host in responses:
+        print(host)
+        sorted_results = sorted(responses[host], key=lambda x: x[0])
+        for port, flag in sorted_results:
+            if flag == 'SA':
+                print(f"\t{port}: OPEN")
