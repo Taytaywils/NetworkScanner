@@ -22,9 +22,10 @@ def init_batches(ports):
     
     return batches
             
-def scan_batch(host, batch, timeout):    
-    rst_packets = IP(dst=host) / TCP(sport=random.randint(1001, 65535), dport=batch, flags="R")
-    packets = IP(dst=host) / TCP(sport=random.randint(1001, 65535), dport=batch, flags="S")
+def scan_batch(host, batch, timeout):
+    sport = random.randint(1001, 65535)
+    rst_packets = IP(dst=host) / TCP(sport=sport, dport=batch, flags="R")
+    packets = IP(dst=host) / TCP(sport=sport, dport=batch, flags="S")
     answered, unanswered = sr(packets, timeout=timeout, verbose=0)
     send(rst_packets, verbose=0)
     return host, parse_packets(answered, unanswered) # func returns (port, flag)
